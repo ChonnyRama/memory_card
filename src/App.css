@@ -1,0 +1,98 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 800px;
+}
+
+body {
+  background-image: url('./assets/thumb-1920-877345.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+  gap: 50px;
+}
+
+.card {
+  background-color: rgba(118, 38, 118, .5);
+  border-radius: 20px;
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+}
+.card button {
+  display: flex;
+  justify-content: center;
+  background-color: inherit;
+}
+button > img {
+  min-width: 150px;
+  height: auto;
+}
+
+.pokemon-info {
+  background-color: inherit;
+  border-radius: 20px;
+}
+
+.typing {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.typing > img {
+  min-width: 30%;
+}
