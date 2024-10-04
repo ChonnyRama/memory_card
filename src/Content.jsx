@@ -1,38 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Cards from './components/Cards'
+import useFetchPokemon from './hooks/useFetchPokemon'
 
 export default function Content({
   onScore,
 }) {
-  const [unusedPokemon, setUnusedPokemon] = useState([])
-  const [toCard, setToCard] = useState([])
-  const [selectedPokemon,setSelectedPokemon] = useState([])
-
-  useEffect(() => {
-    const pokemonArray = []
-    const searchFilters = ['small', 'average', 'large', 'super', 'busted', 'totem' ]
-    const fetchGhostTypes = async () => {
-      const result = await fetch('https://pokeapi.co/api/v2/type/ghost')
-      const data = await result.json()
-      const ghostTypePokemon = data.pokemon
-        .map((mon) => ({
-        name: mon.pokemon.name,
-        url: mon.pokemon.url,
-        }))
-        .filter((mon) => searchFilters.every((filter => !mon.name.includes(filter))));
-      
-      const selectedPokemon = [];
-      while (selectedPokemon.length < 6) {
-        const randomIndex = Math.floor(Math.random() * ghostTypePokemon.length)
-        const selected = ghostTypePokemon.splice(randomIndex, 1)[0]
-        selectedPokemon.push(selected)
-      }
-      setUnusedPokemon(ghostTypePokemon);
-      setToCard(selectedPokemon);
-
-    }
-    fetchGhostTypes();
-  }, [])
+  const [selectedPokemon, setSelectedPokemon] = useState([])
+  const { toCard, setToCard, unusedPokemon } = useFetchPokemon()
 
 
   function onPokemon(monName) {
