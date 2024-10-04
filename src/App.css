@@ -96,3 +96,44 @@ button > img {
 .typing > img {
   min-width: 30%;
 }
+
+.no-win {
+  display: none;
+}
+
+.win-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 800px;
+  height: 80vh;
+  font-size: 2rem;
+  animation: fadeIn 4s forwards;
+  transform: none;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.hide-win {
+  animation: fadeOut 3s forwards;
+
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}

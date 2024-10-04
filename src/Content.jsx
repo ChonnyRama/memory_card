@@ -6,50 +6,79 @@ export default function Content({
   onScore,
 }) {
   const [selectedPokemon, setSelectedPokemon] = useState([])
-  const { toCard, setToCard, unusedPokemon } = useFetchPokemon()
+  const [hasWinner, setHasWinner] = useState(true)
+  const { toCard, setToCard, unusedPokemon, setUnusedPokemon } = useFetchPokemon()
 
-
-  function onPokemon(monName) {
-    //function that triggers when a pokemon is clicked
-    const shuffle = (array) => {
-      for (let i = array.length - 1; i > 0; i--) {
+  function shuffleCards() {
+    const array = [...toCard]
+    for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]]
-      }
-      return array
     }
+    setToCard(array)
+  }
 
-    const shuffledArray = shuffle([...toCard])
-    setToCard(shuffledArray)
-
+  function onPokemon(monName) {
+    shuffleCards()
     if (!selectedPokemon.includes(monName)) {
       setSelectedPokemon((prevSelected) => {
         const updatedSelected = [...prevSelected, monName]
         onScore(updatedSelected.length)
+        if (updatedSelected.length >= 6) {
+          onMilestone(9)
+        }
+        if (updatedSelected.length === 15) {
+          onWin()
+        }
         return updatedSelected
       })
     } else {
       setSelectedPokemon([])
       onScore(0)
+      onMilestone(6)
     }
   }
-    //add that pokemon's name to an array
 
+  function onMilestone(numCards) {
+    const newToCard = []
+    const newUnused = [...unusedPokemon]
+    while (newToCard.length < numCards) {
+      const randomIndex = Math.floor(Math.random() * newUnused.length)
+      const randomMon = newUnused.splice(randomIndex, 1)[0]
+      newToCard.push(randomMon)
+    }
+    setToCard(newToCard)
+    setUnusedPokemon(newUnused)
+  }
 
-    
-    
-  
+  function onWin() {
+    setHasWinner(!hasWinner)
+    setSelectedPokemon([])
+    onScore(0)
+    onMilestone(6)
+
+  }
+
   return (
-    <div className='card-container'>
-      {toCard.map((pokemon) => (
-        <div className='card' key={pokemon.name}>
-          <Cards
-            values={pokemon}
-            onPokemon={(monName)=> onPokemon(monName)}
-            onScore={onScore}
-          />
-        </div>
-      ))}
-    </div>
+    <>
+      <div className={hasWinner ? 'win-box' : 'no-win'}>
+        <span>You win!</span>
+        <button
+          onClick={onWin}
+        >Replay</button>
+      </div>
+      <div className={hasWinner ? 'hide-win' : 'card-container'}>
+        {toCard.map((pokemon) => (
+          <div className='card' key={pokemon.name}>
+            <Cards
+              values={pokemon}
+              onPokemon={(monName)=> onPokemon(monName)}
+              onScore={onScore}
+            />
+          </div>
+        ))}
+      </div>
+    </>
+
   )
 }

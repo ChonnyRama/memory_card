@@ -9,6 +9,7 @@ export default function useFetchPokemon() {
     const fetchGhostTypes = async () => {
       const result = await fetch('https://pokeapi.co/api/v2/type/ghost')
       const data = await result.json()
+
       const ghostTypePokemon = data.pokemon
         .map((mon) => ({
         name: mon.pokemon.name,
@@ -29,5 +30,5 @@ export default function useFetchPokemon() {
     fetchGhostTypes();
   }, [])
 
-  return {toCard, setToCard, unusedPokemon}
+  return {toCard, setToCard, unusedPokemon, setUnusedPokemon}
 }
